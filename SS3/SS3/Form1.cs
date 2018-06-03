@@ -12,18 +12,38 @@ namespace SS3
 {
     public partial class Form1 : Form
     {
+        PlayContext context;
         int N = 3;
         Play p;
         Bitmap bitmap;
-        public Form1()
+        public Form1(PlayContext db)
         {
+            this.context = db;
             InitializeComponent();
             bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            p = new Play(N);
+            p = new Play(N, context);
+            try
+            {
+                List < PlayDB > list=p.getList();
+                if (list != null)
+                {
+                    dataGridViewWinners.DataSource = list;
+                    dataGridViewWinners.Columns[0].Visible = true;
+                    dataGridViewWinners.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+            }
+            catch (Exception ex)
+            {
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                }
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void button00_Click(object sender, EventArgs e)

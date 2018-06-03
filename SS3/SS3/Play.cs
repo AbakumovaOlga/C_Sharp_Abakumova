@@ -8,11 +8,13 @@ namespace SS3
 {
     class Play : IPlay
     {
+        PlayContext context;
         static int N;
         static int[,] matrix;// -1 пустая
         bool cross;
-        public Play(int n, bool cr = true)
+        public Play(int n, PlayContext context, bool cr = true)
         {
+            this.context = context;
             N = 3;
             cross = cr;
             matrix = new int[N, N];
@@ -23,6 +25,16 @@ namespace SS3
                     matrix[i, j] = -1;
                 }
             }
+        }
+
+        public List<PlayDB> getList()
+        {
+            List<PlayDB> res = new List<PlayDB>();
+            foreach (PlayDB p in context.Plays)
+            {
+                res.Add(p);
+            }
+            return res;
         }
 
         public void hasFree()
@@ -37,6 +49,9 @@ namespace SS3
                     }
                 }
             }
+            PlayDB winner = new PlayDB { Winner = "Ничья." };
+            context.Plays.Add(winner);
+            context.SaveChanges();
             throw new Exception("Ничья.");
         }
 
@@ -89,10 +104,16 @@ namespace SS3
                 }
                 if (XMainDia == N || XSecDia == N || XLine == N || XCol == N)
                 {
+                    PlayDB winner = new PlayDB { Winner = "Победа X" };
+                    context.Plays.Add(winner);
+                    context.SaveChanges();
                     throw new ExWin("X");
                 }
                 if (OMainDia == N || OSecDia == N || OLine == N || OCol == N)
                 {
+                    PlayDB winner = new PlayDB { Winner = "Победа 0" };
+                    context.Plays.Add(winner);
+                    context.SaveChanges();
                     throw new ExWin("0");
                 }
             }
@@ -104,7 +125,7 @@ namespace SS3
             {
                 throw new Exception("Выход за границы поля");
             }
-           hasFree();
+            hasFree();
 
             if (matrix[x, y] == -1)
             {
