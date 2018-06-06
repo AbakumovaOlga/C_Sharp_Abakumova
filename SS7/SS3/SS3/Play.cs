@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace SS3
 {
-    class Play : IPlay
+   public class Play : IPlay
     {
         PlayContext context;
         static int N;
         static int[,] matrix;// -1 пустая
         bool cross;
-        public Play(int n, PlayContext context, bool cr = true)
+        public Play(int n,PlayContext context, bool cr = true)
         {
             this.context = context;
             N = 3;
@@ -27,25 +27,30 @@ namespace SS3
             }
         }
 
+        public int [,] getMatrix()
+        {
+            return matrix;
+        }
+
         public List<PlayDB> getList()
         {
             List<PlayDB> res = new List<PlayDB>();
-            foreach (PlayDB p in context.Plays)
+            foreach (PlayDB p in context.Plays.ToList())
             {
                 res.Add(p);
             }
             return res;
         }
 
-        public void hasFree()
+        public bool hasFree(int [,] m)
         {
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < N; j++)
                 {
-                    if (matrix[i, j] == -1)
+                    if (m[i, j] == -1)
                     {
-                        return;
+                        return true;
                     }
                 }
             }
@@ -55,7 +60,7 @@ namespace SS3
             throw new Exception("Ничья.");
         }
 
-        public void isWin()
+        public bool isWin(int[,] m)
         {
             int XMainDia = 0;
             int OMainDia = 0;
@@ -69,36 +74,36 @@ namespace SS3
                 int OCol = 0;
                 for (int j = 0; j < N; j++)
                 {
-                    if (matrix[i, j] == 1)
+                    if (m[i, j] == 1)
                     {
                         XLine++;
                     }
-                    if (matrix[i, j] == 0)
+                    if (m[i, j] == 0)
                     {
                         OLine++;
                     }
-                    if (matrix[j, i] == 1)
+                    if (m[j, i] == 1)
                     {
                         XCol++;
                     }
-                    if (matrix[j, i] == 0)
+                    if (m[j, i] == 0)
                     {
                         OCol++;
                     }
                 }
-                if (matrix[i, i] == 1)
+                if (m[i, i] == 1)
                 {
                     XMainDia++;
                 }
-                if (matrix[i, i] == 0)
+                if (m[i, i] == 0)
                 {
                     OMainDia++;
                 }
-                if (matrix[i, N - 1 - i] == 1)
+                if (m[i, N - 1 - i] == 1)
                 {
                     XSecDia++;
                 }
-                if (matrix[i, N - 1 - i] == 0)
+                if (m[i, N - 1 - i] == 0)
                 {
                     OSecDia++;
                 }
@@ -117,35 +122,58 @@ namespace SS3
                     throw new ExWin("0");
                 }
             }
+            return false;
         }
 
-        public int[,] step(int y, int x)
+        public int[,] step(int y, int x, int [,] m)
         {
             if (x >= N || y >= N)
             {
                 throw new Exception("Выход за границы поля");
             }
-            hasFree();
+            hasFree(m);
 
-            if (matrix[x, y] == -1)
+            if (m[x, y] == -1)
             {
                 if (cross)
                 {
-                    matrix[x, y] = 1;
+                    m[x, y] = 1;
                     cross = false;
                 }
                 else
                 {
-                    matrix[x, y] = 0;
+                    m[x, y] = 0;
                     cross = true;
                 }
-                isWin();
-                return matrix;
+                isWin(m);
+                return m;
             }
             else
             {
                 throw new Exception("Эта клетка занята");
             }
+        }
+
+        public string allWinner(List<PlayDB> list)
+        {
+            string res = "";
+            int countX = 0;
+            int count0 = 0;
+            foreach(PlayDB p in list)
+            {
+                if(p.Winner.Equals("Победа X"))
+                {
+                    countX++;
+                }
+                if(p.Winner.Equals("Победа 0"))
+                {
+                    count0++;
+                }
+            }
+            if(countX>count0) res= "Победа X";
+            if (count0 > countX) res = "Победа 0";
+            if (countX == count0) res = "Ничья";
+            return "Общая " + res;
         }
     }
 }

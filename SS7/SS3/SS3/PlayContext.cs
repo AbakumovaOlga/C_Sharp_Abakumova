@@ -10,9 +10,9 @@ namespace SS3
     public class PlayContext : DbContext
     {
         public PlayContext()
-           : base("MyDbConnection")
+           : base("MyDbConnection2")
         { }
 
-        public DbSet<PlayDB> Plays { get; set; }
+        public DbSet<PlayDB> Plays {  get;  set; }
     }
 }

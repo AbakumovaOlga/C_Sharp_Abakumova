@@ -40,6 +40,7 @@
             this.button22 = new System.Windows.Forms.Button();
             this.textBox = new System.Windows.Forms.TextBox();
             this.dataGridViewWinners = new System.Windows.Forms.DataGridView();
+            this.buttonBigWinner = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWinners)).BeginInit();
             this.SuspendLayout();
@@ -170,11 +171,22 @@
             this.dataGridViewWinners.Size = new System.Drawing.Size(366, 309);
             this.dataGridViewWinners.TabIndex = 11;
             // 
+            // buttonBigWinner
+            // 
+            this.buttonBigWinner.Location = new System.Drawing.Point(996, 58);
+            this.buttonBigWinner.Name = "buttonBigWinner";
+            this.buttonBigWinner.Size = new System.Drawing.Size(52, 254);
+            this.buttonBigWinner.TabIndex = 12;
+            this.buttonBigWinner.Text = "У кого больше побед";
+            this.buttonBigWinner.UseVisualStyleBackColor = true;
+            this.buttonBigWinner.Click += new System.EventHandler(this.buttonBigWinner_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1072, 368);
+            this.ClientSize = new System.Drawing.Size(1072, 369);
+            this.Controls.Add(this.buttonBigWinner);
             this.Controls.Add(this.dataGridViewWinners);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.button22);
@@ -212,6 +224,7 @@
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.DataGridView dataGridViewWinners;
+        private System.Windows.Forms.Button buttonBigWinner;
     }
 }
 

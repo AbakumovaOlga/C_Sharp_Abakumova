@@ -28,7 +28,7 @@ namespace SS3
             p = new Play(N, context);
             try
             {
-                List < PlayDB > list=p.getList();
+                List<PlayDB> list = p.getList();
                 if (list != null)
                 {
                     dataGridViewWinners.DataSource = list;
@@ -50,7 +50,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(0, 0));
+                paint(p.step(0, 0, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -67,7 +67,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(0, 1));
+                paint(p.step(0, 1, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -84,7 +84,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(0, 2));
+                paint(p.step(0, 2, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -101,7 +101,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(1, 0));
+                paint(p.step(1, 0, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -118,7 +118,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(1, 1));
+                paint(p.step(1, 1, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -135,7 +135,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(1, 2));
+                paint(p.step(1, 2, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -152,7 +152,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(2, 0));
+                paint(p.step(2, 0, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -169,7 +169,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(2, 1));
+                paint(p.step(2, 1, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -186,7 +186,7 @@ namespace SS3
         {
             try
             {
-                paint(p.step(2, 2));
+                paint(p.step(2, 2, p.getMatrix()));
             }
             catch (ExWin exW)
             {
@@ -197,6 +197,11 @@ namespace SS3
             {
                 textBox.Text = ex.Message;
             }
+        }
+
+        private void buttonBigWinner_Click(object sender, EventArgs e)
+        {
+            textBox.Text = p.allWinner(p.getList());
         }
 
         private void paint(int[,] r)
@@ -216,7 +221,7 @@ namespace SS3
             paintField();
             try
             {
-                p.hasFree();
+                p.hasFree(p.getMatrix());
             }
             catch (ExWin exW)
             {
