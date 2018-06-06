@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SS3;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SS3Tests
 {
@@ -50,7 +52,7 @@ namespace SS3Tests
         {
             // Arrange
             PlayContext c = new PlayContext();
-            PlayFake playFake = new PlayFake();
+            PlayStub playFake = new PlayStub();
             Play play = new Play(3, c);
             string expected = "Общая Победа X";
 
@@ -68,7 +70,7 @@ namespace SS3Tests
         {
             // Arrange
             PlayContext c = new PlayContext();
-            PlayFake playFake = new PlayFake();
+            PlayStub playFake = new PlayStub();
             Play p = new Play(3, c);
             var list = playFake.getList();
             string expected = "Общая Победа X";
@@ -92,4 +94,3 @@ namespace SS3Tests
         }
     }
 }
-
